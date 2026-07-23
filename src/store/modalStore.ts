@@ -70,16 +70,14 @@ export const useModalStore = create<ModalStoreState>()(
           if (activeModal.length === 0) return state;
 
           const modalArray = Object.entries(modal);
-          let indexPositionOffset = 0;
           modalArray
-            .sort((a, b) => a[1].zIndex - b[1].zIndex) // sort by z-index in ascending order
+            .sort((a, b) => b[1].zIndex - a[1].zIndex) // sort by z-index in descending order
             .forEach(([modalKey, modalValue], i) => {
               if (modalValue?.status && modalKey === key) {
-                modalValue.zIndex = activeModal?.length * 100;
+                modalValue.zIndex = (activeModal?.length + 1) * 100;
                 modalValue.onTop = true;
-                indexPositionOffset = 1;
               } else if (modalValue.status) {
-                modalValue.zIndex = (i + 1 - indexPositionOffset) * 100;
+                modalValue.zIndex = (activeModal?.length - i) * 100;
                 modalValue.onTop = false;
               }
             });
