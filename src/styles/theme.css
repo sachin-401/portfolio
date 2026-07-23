@@ -1,0 +1,94 @@
+/* ==========================================================================
+   1. BASE SCHEMES (Light / Dark Core Structural Variables)
+   ========================================================================== */
+
+/* Universal Root Settings */
+:root {
+  /* System Backdrop Filter blur intensity */
+  --glass-blur: 12px;
+}
+
+/* Base Light Mode Core */
+:root,
+[data-mode="light"] {
+  --background-rgb: 245, 245, 247;
+  --foreground-rgb: 20, 20, 20;
+  --glass-bg-rgb: 255, 255, 255;
+  --glass-opacity: 0.4;
+  --glass-border-rgb: 255, 255, 255;
+  --glass-border-opacity: 0.5;
+  --shadow-strength: rgba(0, 0, 0, 0.08) 0px 8px 32px 0px;
+}
+
+/* Base Dark Mode Core */
+[data-mode="dark"] {
+  --background-rgb: 20, 20, 20;
+  --foreground-rgb: 254, 254, 254;
+  --glass-bg-rgb: 30, 30, 30;
+  --glass-opacity: 0.45;
+  --glass-border-rgb: 255, 255, 255;
+  --glass-border-opacity: 0.08;
+  --shadow-strength: rgba(0, 0, 0, 0.37) 0px 8px 32px 0px;
+}
+
+/* ==========================================================================
+   2. ACCENT TINTS (Default Gray, Orange, Purple)
+   ========================================================================== */
+
+/* Default Tint (Gray/Neutral) */
+:root,
+[data-theme="default"] {
+  --accent-rgb: 142, 142, 147;
+}
+
+/* Orange Accent Tint */
+[data-theme="orange"] {
+  --accent-rgb: 255, 149, 0;
+  /* We slightly warm up the glass backgrounds for the orange theme */
+  --glass-bg-rgb: 255, 248, 240;
+}
+[data-mode="dark"][data-theme="orange"] {
+  --glass-bg-rgb: 35, 25, 15;
+}
+
+/* Purple Accent Tint */
+[data-theme="purple"] {
+  --accent-rgb: 175, 82, 222;
+  /* We slightly cool down the glass backgrounds for the purple theme */
+  --glass-bg-rgb: 248, 240, 255;
+}
+[data-mode="dark"][data-theme="purple"] {
+  --glass-bg-rgb: 25, 15, 35;
+}
+
+/* ==========================================================================
+   3. TAILWIND UTILITY MAPPING
+   ========================================================================== */
+@utility bg-os-desktop {
+  background-color: rgb(var(--background-rgb));
+}
+@utility text-os-main {
+  color: rgb(var(--foreground-rgb));
+}
+@utility accent-os {
+  color: rgb(var(--accent-rgb));
+}
+@utility bg-os-accent {
+  background-color: rgb(var(--accent-rgb));
+}
+
+/* Dynamic Glassmorphism Engine Window Utility */
+@utility glass-window {
+  background-color: rgba(var(--glass-bg-rgb), var(--glass-opacity));
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid rgba(var(--glass-border-rgb), var(--glass-border-opacity));
+  box-shadow: var(--shadow-strength);
+}
+
+@utility btn-main {
+  @apply bg-os-accent text-black dark:text-white font-semibold text-xs tracking-wide cursor-pointer px-4 py-1.5 rounded-lg;
+}
+@utility btn-dock {
+  @apply font-medium text-xs tracking-wide cursor-pointer px-4 py-1.5;
+}
