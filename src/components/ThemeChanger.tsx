@@ -13,7 +13,7 @@ export const ThemeChanger = () => {
 
   return (
     <div>
-      <button onClick={handleOpenThemeChangeModal} className="btn-dock">
+      <button onClick={handleOpenThemeChangeModal} className="btn-dock px-1">
         <VscSymbolColorCompact size={18} />
       </button>
     </div>

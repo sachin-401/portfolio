@@ -4,7 +4,6 @@
 
 /* Universal Root Settings */
 :root {
-  /* System Backdrop Filter blur intensity */
   --glass-blur: 12px;
 }
 
@@ -17,6 +16,7 @@
   --glass-opacity: 0.4;
   --glass-border-rgb: 255, 255, 255;
   --glass-border-opacity: 0.5;
+  --border-rgb: 10, 10, 19;
   --shadow-strength: rgba(0, 0, 0, 0.08) 0px 8px 32px 0px;
 }
 
@@ -26,6 +26,7 @@
   --foreground-rgb: 254, 254, 254;
   --glass-bg-rgb: 30, 30, 30;
   --glass-opacity: 0.45;
+  --border-rgb: 255, 255, 255;
   --glass-border-rgb: 255, 255, 255;
   --glass-border-opacity: 0.08;
   --shadow-strength: rgba(0, 0, 0, 0.37) 0px 8px 32px 0px;
@@ -44,40 +45,52 @@
 /* Orange Accent Tint */
 [data-theme="orange"] {
   --accent-rgb: 255, 149, 0;
-  /* We slightly warm up the glass backgrounds for the orange theme */
-  --glass-bg-rgb: 255, 248, 240;
+  --glass-bg-rgb: 245, 204, 157;
+  --background-rgb: 255, 241, 230;
+  --border-rgb: 31, 14, 1;
 }
 [data-mode="dark"][data-theme="orange"] {
-  --glass-bg-rgb: 35, 25, 15;
+  --glass-bg-rgb: 166, 90, 13;
+  --background-rgb: 31, 14, 1;
+  --border-rgb: 255, 241, 230;
 }
 
 /* Purple Accent Tint */
 [data-theme="purple"] {
   --accent-rgb: 175, 82, 222;
-  /* We slightly cool down the glass backgrounds for the purple theme */
-  --glass-bg-rgb: 248, 240, 255;
+  --glass-bg-rgb: 193, 152, 229;
+  --background-rgb: 207, 207, 237;
+  --border-rgb: 13, 1, 23;
 }
+
 [data-mode="dark"][data-theme="purple"] {
-  --glass-bg-rgb: 25, 15, 35;
+  --glass-bg-rgb: 51, 1, 101;
+  --background-rgb: 13, 1, 23;
+  --border-rgb: 207, 207, 237;
 }
 
 /* ==========================================================================
    3. TAILWIND UTILITY MAPPING
    ========================================================================== */
+
+/* Base utilities */
 @utility bg-os-desktop {
   background-color: rgb(var(--background-rgb));
 }
+
 @utility text-os-main {
   color: rgb(var(--foreground-rgb));
 }
+
 @utility accent-os {
   color: rgb(var(--accent-rgb));
 }
+
 @utility bg-os-accent {
   background-color: rgb(var(--accent-rgb));
 }
 
-/* Dynamic Glassmorphism Engine Window Utility */
+/* Glassmorphism */
 @utility glass-window {
   background-color: rgba(var(--glass-bg-rgb), var(--glass-opacity));
   backdrop-filter: blur(var(--glass-blur));
@@ -86,9 +99,64 @@
   box-shadow: var(--shadow-strength);
 }
 
+/* Buttons */
 @utility btn-main {
   @apply bg-os-accent text-black dark:text-white font-semibold text-xs tracking-wide cursor-pointer px-4 py-1.5 rounded-lg;
 }
+
 @utility btn-dock {
   @apply font-medium text-xs tracking-wide cursor-pointer px-4 py-1.5;
+}
+
+@utility border-os {
+  border-color: rgba(var(--border-rgb), var(--border-opacity, 1));
+}
+@utility border-os/10 {
+  border-color: rgba(var(--border-rgb), 0.1);
+}
+@utility border-os/30 {
+  border-color: rgba(var(--border-rgb), 0.3);
+}
+@utility border-os/80 {
+  border-color: rgba(var(--border-rgb), 0.8);
+}
+
+/* ==========================================================================
+   4. THEME COLOR UTILITIES (For Theme Selector)
+   ========================================================================== */
+
+/* Default/Light Theme Colors */
+.bg-theme-default-light {
+  background-color: rgb(245, 245, 247);
+}
+.bg-theme-default-dark {
+  background-color: rgb(20, 20, 20);
+}
+
+/* Orange Theme Colors */
+.bg-theme-orange-light {
+  background-color: rgb(246 227 201);
+}
+.bg-theme-orange-dark {
+  background-color: rgb(86 49 8);
+}
+
+/* Purple Theme Colors */
+.bg-theme-purple-light {
+  background-color: rgb(201 184 234);
+}
+.bg-theme-purple-dark {
+  background-color: rgb(30 1 59);
+}
+
+/* ==========================================================================
+   5. HOVER/ACTIVE STATES FOR THEME SELECTOR
+   ========================================================================== */
+
+.theme-swatch {
+  @apply transition-all duration-300 cursor-pointer hover:scale-110 hover:shadow-lg;
+}
+
+.theme-swatch:active {
+  @apply scale-90;
 }

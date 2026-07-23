@@ -13,10 +13,8 @@ export const DesktopIcons = () => {
       {homeIcons.map((icon) => (
         <div
           key={icon.key}
-          className={`w-28 flex flex-col items-center border border-neutral-300 gap-2 p-2 rounded-xl cursor-pointer select-none ${
-            selectedIcon === icon.key
-              ? "border-neutral-600"
-              : "hover:border-neutral-500"
+          className={`w-28 flex flex-col items-center border border-os/10  gap-2 p-2 rounded-xl cursor-pointer select-none ${
+            selectedIcon === icon.key ? "border-os/80" : "hover:border-os/30"
           }`}
           onClick={() => setSelectedIcon(icon.key)}
           onDoubleClick={() => {

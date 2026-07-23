@@ -4,6 +4,7 @@ import { FiX, FiMinus, FiMaximize } from "react-icons/fi";
 import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { useModalStore } from "@/store/modalStore";
 import { ModalKeysType } from "@/constants/modals";
+import { useThemeStore } from "@/store/themeStore";
 
 type ModalProps = {
   children: React.ReactNode;
@@ -14,6 +15,7 @@ type ModalProps = {
   minHeight?: number;
   rememberPosition?: boolean;
   modalKey?: ModalKeysType;
+  disableMaximize?: boolean;
 };
 
 const getMenuDockTopOffset = () => {
@@ -33,6 +35,7 @@ export const Modal = ({
   minHeight = 300,
   rememberPosition = true,
   modalKey = "os-modal",
+  disableMaximize,
 }: ModalProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
@@ -42,6 +45,8 @@ export const Modal = ({
   const [isMounted, setIsMounted] = useState(false);
   const { updatePosition, closeModal, modal, updateZIndexToTop } =
     useModalStore();
+  const themeMode = useThemeStore((s) => s.mode);
+  const isDark = themeMode === "dark";
 
   const position = useMemo(
     () => modal?.[modalKey]?.position || { x: 0, y: 0 },
@@ -188,6 +193,7 @@ export const Modal = ({
 
   // Handle maximize
   const handleMaximize = () => {
+    if (disableMaximize) return;
     const bottomOffset = getMenuDockTopOffset();
     // Maximize to full screen (with some padding)
     setWindowSize({
@@ -303,41 +309,43 @@ export const Modal = ({
 
                 {/* Title */}
                 <h2
-                  className={`text-sm font-semibold opacity-80 select-none ${isOnTop ? "text-white" : "text-black"}`}
+                  className={`text-sm font-semibold opacity-80 select-none ${isOnTop ? "text-white" : isDark ? "text-white" : "text-black"}`}
                 >
                   {title}
                 </h2>
               </div>
 
               <div>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (isMaximized) {
-                      handleMinimize();
-                    } else {
-                      handleMaximize();
-                    }
-                  }}
-                  className={`p-1.5 rounded-lg transition-all ${
-                    isOnTop
-                      ? "hover:bg-orange-400 hover:text-white"
-                      : "hover:bg-orange-200 hover:text-black"
-                  }`}
-                  aria-label="Maximize"
-                >
-                  {isMaximized ? (
-                    <FiMinus
-                      size={16}
-                      className={`${isOnTop ? "text-white" : "text-black"}`}
-                    />
-                  ) : (
-                    <FiMaximize
-                      size={16}
-                      className={`${isOnTop ? "text-white" : "text-black"}`}
-                    />
-                  )}
-                </button>
+                {!disableMaximize && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (isMaximized) {
+                        handleMinimize();
+                      } else {
+                        handleMaximize();
+                      }
+                    }}
+                    className={`p-1.5 rounded-lg transition-all ${
+                      isOnTop
+                        ? "hover:bg-orange-400 hover:text-white"
+                        : "hover:bg-orange-200 hover:text-black"
+                    }`}
+                    aria-label="Maximize"
+                  >
+                    {isMaximized ? (
+                      <FiMinus
+                        size={16}
+                        className={`${isOnTop ? "text-white" : isDark ? "text-white" : "text-black"}`}
+                      />
+                    ) : (
+                      <FiMaximize
+                        size={16}
+                        className={`${isOnTop ? "text-white" : isDark ? "text-white" : "text-black"}`}
+                      />
+                    )}
+                  </button>
+                )}
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -352,18 +360,14 @@ export const Modal = ({
                 >
                   <FiX
                     size={16}
-                    className={`${isOnTop ? "text-white" : "text-black"}`}
+                    className={`${isOnTop ? "text-white" : isDark ? "text-white" : "text-black"}`}
                   />
                 </button>
               </div>
             </div>
 
             {/* Window Content */}
-            <div className="flex-1 overflow-y-auto p-6">
-              {children}
-
-              {JSON.stringify(position)}
-            </div>
+            <div className="flex-1 overflow-y-auto p-1">{children}</div>
 
             {/* Optional: Resize Handle (bottom-right corner) */}
             {/* <div

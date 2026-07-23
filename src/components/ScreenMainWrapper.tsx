@@ -21,6 +21,19 @@ export const ScreenMainWrapper = ({
     document.documentElement.setAttribute("data-theme", theme);
   }, [mode, theme]);
 
+  useEffect(() => {
+    const storedMode = localStorage.getItem("theme-mode");
+    if (storedMode) {
+      useThemeStore.setState({ mode: storedMode as "light" | "dark" });
+    }
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme) {
+      useThemeStore.setState({
+        theme: storedTheme as "default" | "orange" | "purple",
+      });
+    }
+  }, []);
+
   return (
     <main
       className={
