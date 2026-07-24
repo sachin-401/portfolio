@@ -13,8 +13,11 @@ import {
   FiLinkedin,
   FiMail,
   FiMapPin,
+  FiTarget,
   FiUser,
 } from "react-icons/fi";
+import CoverJPG from "@/assets/cover.jpg";
+import Image from "next/image";
 
 export const AboutModal = () => {
   const {
@@ -25,6 +28,7 @@ export const AboutModal = () => {
     linkedin,
     location,
     profileSummary,
+    futureVision,
     technicalSkills,
     experiences,
     keyProjects,
@@ -37,9 +41,20 @@ export const AboutModal = () => {
       <div className="p-4 space-y-4 text-os-main text-sm">
         {/* Header / Hero Card */}
         <div className="glass-window p-5 rounded-2xl border border-os/10 bg-os-desktop/60 backdrop-blur-md space-y-3">
+          <div className="relative w-full h-38 rounded-md overflow-clip">
+            <Image
+              src={CoverJPG}
+              alt="cover"
+              objectFit="contain"
+              fill
+              className=""
+            />
+          </div>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h1 className="text-2xl font-bold tracking-tight accent-os">{name}</h1>
+              <h1 className="text-2xl font-bold tracking-tight accent-os">
+                {name}
+              </h1>
               <p className="text-xs opacity-75 font-medium">{title}</p>
             </div>
             <div className="flex items-center gap-1.5 text-xs opacity-80 bg-os-accent/10 px-3 py-1.5 rounded-full border border-os/10 w-fit">
@@ -81,7 +96,31 @@ export const AboutModal = () => {
 
         {/* Profile Summary Card */}
         <CardSection icon={FiUser} title="Profile Summary">
-          <p className="opacity-90 leading-relaxed text-xs sm:text-sm">{profileSummary}</p>
+          <p className="opacity-90 leading-relaxed text-xs sm:text-sm">
+            {profileSummary}
+          </p>
+        </CardSection>
+
+        {/* Future Vision & Ambitions Card */}
+        <CardSection icon={FiTarget} title="Future & Ambitions">
+          <div className="space-y-3">
+            {futureVision.paragraphs.map((para, idx) => (
+              <p
+                key={idx}
+                className="opacity-90 leading-relaxed text-xs sm:text-sm"
+              >
+                {para}
+              </p>
+            ))}
+            <div className="mt-3 p-3.5 rounded-xl bg-os-accent/10 border-l-4 border-os-accent/70 bg-os-desktop/60 italic space-y-1">
+              <p className="opacity-95 text-xs sm:text-sm font-medium">
+                &ldquo;{futureVision.quote.text}&rdquo;
+              </p>
+              <span className="block text-right text-[11px] font-semibold not-italic accent-os opacity-90">
+                — {futureVision.quote.author}
+              </span>
+            </div>
+          </div>
         </CardSection>
 
         {/* Technical Skills Card */}
@@ -129,7 +168,9 @@ export const AboutModal = () => {
                     <FiExternalLink className="text-xs opacity-70" />
                   </a>
                 </div>
-                <p className="text-xs opacity-85 leading-normal">{proj.description}</p>
+                <p className="text-xs opacity-85 leading-normal">
+                  {proj.description}
+                </p>
                 {proj.tech && proj.tech.length > 0 && (
                   <div className="flex flex-wrap gap-1 pt-1">
                     {proj.tech.map((t) => (
@@ -156,8 +197,12 @@ export const AboutModal = () => {
                 className="p-3 rounded-xl bg-os-desktop/60 border border-os/10 space-y-1"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                  <span className="font-semibold text-xs text-os-main">{exp.company}</span>
-                  <span className="text-[11px] opacity-60 font-mono">{exp.period}</span>
+                  <span className="font-semibold text-xs text-os-main">
+                    {exp.company}
+                  </span>
+                  <span className="text-[11px] opacity-60 font-mono">
+                    {exp.period}
+                  </span>
                 </div>
                 <div className="text-xs font-medium accent-os">{exp.role}</div>
                 <p className="text-xs opacity-80 pt-0.5">{exp.summary}</p>
@@ -173,7 +218,9 @@ export const AboutModal = () => {
             <div className="space-y-1 text-xs">
               <p className="font-semibold text-os-main">{education.degree}</p>
               <p className="opacity-80">{education.institution}</p>
-              <p className="opacity-60 text-[11px] font-mono">{education.location} • {education.year}</p>
+              <p className="opacity-60 text-[11px] font-mono">
+                {education.location} • {education.year}
+              </p>
             </div>
           </CardSection>
 
@@ -181,7 +228,10 @@ export const AboutModal = () => {
           <CardSection icon={FiGlobe} title="Languages">
             <div className="space-y-2 pt-1">
               {languages.map((lang) => (
-                <div key={lang.name} className="flex items-center justify-between text-xs">
+                <div
+                  key={lang.name}
+                  className="flex items-center justify-between text-xs"
+                >
                   <span className="font-medium text-os-main">{lang.name}</span>
                   <span className="px-2 py-0.5 text-[10px] rounded-full bg-os-accent/10 accent-os font-medium">
                     {lang.proficiency}
