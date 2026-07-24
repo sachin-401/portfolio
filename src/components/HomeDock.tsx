@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { ThemeChanger } from "./ThemeChanger";
-import { MdOutlineFullscreen, MdOutlineFullscreenExit } from "react-icons/md";
+import { useThemeStore } from "@/store/themeStore";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import LogoPNGDark from "../assets/dark_logo.png";
 import LogoPNGLight from "../assets/light_logo.png";
-import { useThemeStore } from "@/store/themeStore";
+import { FullScreenToggleButton } from "./FullScreenToggleButton";
+import { ThemeChanger } from "./ThemeChanger";
+
 const HomeDock = () => {
   const [date, setDate] = useState(new Date());
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -25,24 +26,6 @@ const HomeDock = () => {
     };
   }, []);
 
-  function toggleFullScreen() {
-    if (!document?.fullscreenElement) {
-      // Enter full screen on the entire page
-      document?.documentElement.requestFullscreen().catch((err) => {
-        alert(
-          `Error attempting to enable fullscreen: ${err.message} (${err.name})`,
-        );
-      });
-    } else {
-      // Exit full screen
-      document?.exitFullscreen();
-    }
-  }
-  function isFullScreen() {
-    if (typeof window === "undefined") return false;
-    return document?.fullscreenElement !== null;
-  }
-
   return (
     <div
       id="menu-dock"
@@ -57,13 +40,7 @@ const HomeDock = () => {
       </button>
       <div className="flex gap-1 items-center">
         <ThemeChanger />
-        <button className="btn-dock px-1" onClick={toggleFullScreen}>
-          {isFullScreen() ? (
-            <MdOutlineFullscreenExit size={24} />
-          ) : (
-            <MdOutlineFullscreen size={24} />
-          )}
-        </button>
+        <FullScreenToggleButton />
         <div className="flex flex-col">
           <div className="text-xs font-mono opacity-70">
             {date.toLocaleDateString()}
