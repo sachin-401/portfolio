@@ -1,3 +1,5 @@
+"use client";
+import { AboutModal } from "./AboutModal";
 import { ContactsModal } from "./ContactsModal";
 import { ExperiencesModal } from "./ExperiencesModal";
 import { ProjectsModal } from "./ProjectsModal";
@@ -12,6 +14,7 @@ export const AllModals = () => {
       <ContactsModal />
       <ExperiencesModal />
       <SkillsModal />
+      <AboutModal />
     </div>
   );
 };

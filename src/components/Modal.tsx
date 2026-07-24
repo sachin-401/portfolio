@@ -1,6 +1,6 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
-import { FiX, FiMinus, FiMaximize } from "react-icons/fi";
+import { FiX, FiMinus, FiMaximize, FiMinimize } from "react-icons/fi";
 import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { useModalStore } from "@/store/modalStore";
 import { ModalKeysType } from "@/constants/modals";
@@ -43,10 +43,18 @@ export const Modal = ({
   const [windowSize, setWindowSize] = useState({ width, height });
   const windowRef = useRef<HTMLDivElement>(null);
   const [isMounted, setIsMounted] = useState(false);
-  const { updatePosition, closeModal, modal, updateZIndexToTop } =
-    useModalStore();
+
+  const {
+    updatePosition,
+    closeModal,
+    modal,
+    updateZIndexToTop,
+    minimizedModals,
+    toggleMinimizeModal,
+  } = useModalStore();
   const themeMode = useThemeStore((s) => s.mode);
   const isDark = themeMode === "dark";
+  const isMinimized = minimizedModals.includes(modalKey);
 
   const position = useMemo(
     () => modal?.[modalKey]?.position || { x: 0, y: 0 },
@@ -192,7 +200,7 @@ export const Modal = ({
   };
 
   // Handle maximize
-  const handleMaximize = () => {
+  const handleMaximizeToFullscreenView = () => {
     if (disableMaximize) return;
     const bottomOffset = getMenuDockTopOffset();
     // Maximize to full screen (with some padding)
@@ -206,7 +214,7 @@ export const Modal = ({
   };
 
   // Handle minimize
-  const handleMinimize = () => {
+  const handleRestoreToSmallView = () => {
     // Restore to previous size
     setWindowSize({ width, height });
     const centerX = (window.innerWidth - width) / 2;
@@ -214,6 +222,10 @@ export const Modal = ({
     setPosition({ x: centerX, y: centerY });
 
     setIsMaximized(false);
+  };
+
+  const handleMinimizeToDock = () => {
+    toggleMinimizeModal(modalKey);
   };
 
   // Handle window resize on viewport change
@@ -263,7 +275,7 @@ export const Modal = ({
 
   return (
     <AnimatePresence>
-      {isOpen && (
+      {isOpen && !isMinimized && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -316,14 +328,31 @@ export const Modal = ({
               </div>
 
               <div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleMinimizeToDock();
+                  }}
+                  className={`p-1.5 rounded-lg transition-all ${
+                    isOnTop
+                      ? "hover:bg-blue-400 hover:text-white"
+                      : "hover:bg-blue-200 hover:text-black"
+                  }`}
+                  aria-label="Maximize"
+                >
+                  <FiMinus
+                    size={16}
+                    className={`${isOnTop ? "text-white" : isDark ? "text-white" : "text-black"}`}
+                  />
+                </button>
                 {!disableMaximize && (
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       if (isMaximized) {
-                        handleMinimize();
+                        handleRestoreToSmallView();
                       } else {
-                        handleMaximize();
+                        handleMaximizeToFullscreenView();
                       }
                     }}
                     className={`p-1.5 rounded-lg transition-all ${
@@ -334,7 +363,7 @@ export const Modal = ({
                     aria-label="Maximize"
                   >
                     {isMaximized ? (
-                      <FiMinus
+                      <FiMinimize
                         size={16}
                         className={`${isOnTop ? "text-white" : isDark ? "text-white" : "text-black"}`}
                       />
@@ -368,24 +397,6 @@ export const Modal = ({
 
             {/* Window Content */}
             <div className="flex-1 overflow-y-auto p-1">{children}</div>
-
-            {/* Optional: Resize Handle (bottom-right corner) */}
-            {/* <div
-              className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize opacity-0 hover:opacity-40 transition-opacity"
-              onMouseDown={(e) => {
-                e.stopPropagation();
-                // TODO: Implement resize if needed
-                console.log("Resize");
-              }}
-            >
-              <svg viewBox="0 0 10 10" className="w-full h-full">
-                <path
-                  d="M0 10L10 0V10H0Z"
-                  fill="currentColor"
-                  className="opacity-30"
-                />
-              </svg>
-            </div> */}
           </motion.div>
         </motion.div>
       )}

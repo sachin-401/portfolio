@@ -19,23 +19,52 @@ interface ModalStoreState {
     position: { x: number; y: number },
   ) => void;
   updateZIndexToTop: (key: ModalKeysType) => void;
+  minimizedModals: ModalKeysType[];
+  toggleMinimizeModal: (key: ModalKeysType) => void;
 }
 
 export const useModalStore = create<ModalStoreState>()(
   persist(
     (set, get) => ({
       modal: {},
-      openModal: (key) => {
-        set((state) => ({
-          modal: {
-            ...state.modal,
-            [key]: {
-              ...(state?.modal?.[key] || {}),
-              status: true,
-            },
-          },
-        }));
-        get().updateZIndexToTop(key);
+      openModal: (_key) => {
+        set((state) => {
+          const modalValues = Object.entries(state.modal).sort(
+            (a, b) => Number(b[1].status) - Number(a[1].status),
+          );
+
+          const modalValuesObject = modalValues.reduce<
+            ModalStoreState["modal"]
+          >((acc, [key, value]) => {
+            if (key === _key) {
+              return {
+                ...acc,
+                [key]: { ...value, status: true },
+              };
+            }
+            return {
+              ...acc,
+              [key]: value,
+            };
+          }, {});
+
+          const updatedValuesSort = Object.entries(modalValuesObject).sort(
+            (a, b) => Number(b[1].status) - Number(a[1].status),
+          );
+
+          return {
+            modal: updatedValuesSort.reduce<ModalStoreState["modal"]>(
+              (acc, [key, value]) => {
+                return {
+                  ...acc,
+                  [key]: value,
+                };
+              },
+              {},
+            ),
+          };
+        });
+        get().updateZIndexToTop(_key);
       },
 
       closeModal: (key: string) => {
@@ -61,6 +90,7 @@ export const useModalStore = create<ModalStoreState>()(
           },
         }));
       },
+
       updateZIndexToTop: (key) => {
         set((state) => {
           const { modal } = state;
@@ -77,7 +107,10 @@ export const useModalStore = create<ModalStoreState>()(
                 modalValue.zIndex = (activeModal?.length + 1) * 100;
                 modalValue.onTop = true;
               } else if (modalValue.status) {
-                modalValue.zIndex = (activeModal?.length - i) * 100;
+                modalValue.zIndex = Math.max(
+                  (activeModal?.length - i) * 100,
+                  10,
+                );
                 modalValue.onTop = false;
               }
             });
@@ -93,6 +126,20 @@ export const useModalStore = create<ModalStoreState>()(
               }, {}),
             },
           };
+        });
+      },
+      minimizedModals: [],
+      toggleMinimizeModal: (key) => {
+        set((state) => {
+          const { minimizedModals } = state;
+          if (minimizedModals.includes(key)) {
+            get().updateZIndexToTop(key);
+            return {
+              minimizedModals: [...minimizedModals.filter((x) => x !== key)],
+            };
+          } else {
+            return { minimizedModals: [...minimizedModals, key] };
+          }
         });
       },
     }),

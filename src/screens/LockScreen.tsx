@@ -1,7 +1,8 @@
 "use client";
 import { useNavigationStore } from "@/store/navigationStore";
 import { useEffect, useState } from "react";
-
+import LogoPNG from "@/assets/dark_logo.png";
+import Image from "next/image";
 export const LockScreen = () => {
   const { desktopRevealed, setDesktopRevealed } = useNavigationStore();
   const [isRevealing, setIsRevealing] = useState(false);
@@ -58,20 +59,8 @@ export const LockScreen = () => {
         className={`glass-window max-w-sm w-full rounded-2xl p-8 text-center flex flex-col items-center tracking-wide transition-all duration-500 ease-in-out transform`}
       >
         {/* User OS Avatar Placeholder */}
-        <div className="h-20 w-20 rounded-full bg-os-accent/20 border-2 border-os-accent/40 flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(var(--accent-rgb),0.2)]">
-          <svg
-            className="w-10 h-10 text-os-main opacity-80"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1.5"
-              d="M12 11c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5-3-8-3z"
-            />
-          </svg>
+        <div className="relative h-20 w-20 rounded-full bg-os-accent/20 border-2 border-os-accent/40 flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(var(--accent-rgb),0.2)]">
+          <Image src={LogoPNG} alt="Logo" objectFit="contain" fill />
         </div>
 
         <h1 className="text-2xl font-bold font-sans tracking-tight mb-2">
