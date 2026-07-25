@@ -108,11 +108,11 @@ export const useModalStore = create<ModalStoreState>()(
             .sort((a, b) => b[1].zIndex - a[1].zIndex) // sort by z-index in descending order
             .forEach(([modalKey, modalValue], i) => {
               if (modalValue?.status && modalKey === key) {
-                modalValue.zIndex = (activeModal?.length + 1) * 100;
+                modalValue.zIndex = (activeModal?.length + 1) * 1000;
                 modalValue.onTop = true;
               } else if (modalValue.status) {
                 modalValue.zIndex = Math.max(
-                  (activeModal?.length - i) * 100,
+                  (activeModal?.length - i) * 1000,
                   10,
                 );
                 modalValue.onTop = false;

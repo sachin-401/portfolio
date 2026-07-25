@@ -299,7 +299,7 @@ export const Modal = ({
             exit={{ scale: 0.95, y: 20, opacity: 0 }}
             onClick={handleWindowClick}
             onMouseDown={handleMouseDown}
-            className={`pointer-events-auto absolute bg-os-window rounded-2xl overflow-hidden shadow-2xl border border-os-window-border bg-os-desktop flex flex-col
+            className={`pointer-events-auto absolute  rounded-2xl overflow-hidden shadow-2xl border border-os-window-border glass-window backdrop-blur-sm flex flex-col
               ${isDragging ? "cursor-grabbing" : "cursor-default"}
               ${isMaximized ? "rounded-none rounded-b-2xl" : "rounded-2xl"}
             `}
@@ -310,11 +310,14 @@ export const Modal = ({
               height: windowSize.height,
               minWidth: minWidth,
               minHeight: minHeight,
+              background: isDark
+                ? "rgba(20, 20, 20, 0.5)"
+                : "rgba(255, 255, 255, 0.5)",
             }}
           >
             {/* Window Header (Draggable Area) */}
             <div
-              className={`window-header flex justify-between items-center px-4 py-2 border-b border-os-window-border ${isMaximized ? "cursor-default" : "cursor-grab active:cursor-grabbing"} ${isOnTop ? "bg-os-accent" : "bg-os-desktop"}`}
+              className={`window-header flex justify-between items-center px-4 py-2 border-b border-os-window-border ${isMaximized ? "cursor-default" : "cursor-grab active:cursor-grabbing"} ${isOnTop ? "glass-window-title-bar backdrop-blur-2xl" : "backdrop-blur-sm"}`}
             >
               <div className="flex items-center gap-3">
                 {/* Title */}

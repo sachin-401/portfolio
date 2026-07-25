@@ -99,6 +99,15 @@
   box-shadow: var(--shadow-strength);
 }
 
+@utility glass-window-title-bar {
+  background-color: rgba(var(--accent-rgb), 0.5);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-bottom: 1px solid
+    rgba(var(--glass-border-rgb), var(--glass-border-opacity));
+  box-shadow: var(--shadow-strength);
+}
+
 /* Buttons */
 @utility btn-main {
   @apply bg-os-accent text-black dark:text-white font-semibold text-xs tracking-wide cursor-pointer px-4 py-1.5 rounded-lg;
