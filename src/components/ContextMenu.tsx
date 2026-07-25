@@ -3,10 +3,11 @@ import { ModalKeysType } from "@/constants/modals";
 import { useContextMenu } from "@/hooks/useContextMenu";
 import { useContextMenuStore } from "@/store/contextMenu";
 import { useModalStore } from "@/store/modalStore";
+import { useNavigationStore } from "@/store/navigationStore";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef } from "react";
 import { BsInfo } from "react-icons/bs";
-import { FiRefreshCw } from "react-icons/fi";
+import { FiLock, FiRefreshCw } from "react-icons/fi";
 
 type MenuItem = {
   label?: string;
@@ -22,6 +23,13 @@ const items: MenuItem[] = [
     label: "Reload Page",
     icon: <FiRefreshCw />,
     onClick: () => window.location.reload(),
+  },
+  {
+    label: "Lock Screen",
+    icon: <FiLock />,
+    onClick: () => {
+      useNavigationStore.getState().setDesktopRevealed(false);
+    },
   },
   {
     divider: true,

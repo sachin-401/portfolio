@@ -43,7 +43,7 @@ export const aboutContent = {
   email: "sachinbhattarai55@gmail.com",
   github: "https://github.com/sachin-55",
   linkedin: "https://linkedin.com/in/5achin-bhattarai",
-  location: "Lalitpur, Nepal",
+  location: "Bhaktapur, Nepal",
   profileSummary:
     "Fullstack Developer with 6+ years of professional experience in web development and 2+ years in mobile and backend development. Specialized in building high-performance applications using React, Next.js, Node.js, TypeScript, and modern frontend/backend technologies. Experienced in leading dev teams, collaborating with international clients, and delivering scalable products across e-commerce, property rental, and social platforms.",
   futureVision: {

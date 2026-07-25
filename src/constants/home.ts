@@ -1,5 +1,5 @@
 import { IconType } from "react-icons";
-import { BsInfoCircleFill } from "react-icons/bs";
+import { BsInfo, BsInfoCircleFill } from "react-icons/bs";
 import {
   FcBriefcase,
   FcBusinessContact,
@@ -12,7 +12,8 @@ export type HomeKeyType =
   | "contacts"
   | "skills"
   | "experiences"
-  | "about";
+  | "about"
+  | "about-os";
 
 export const homeIcons: { key: HomeKeyType; title: string; icon: IconType }[] =
   [
@@ -40,5 +41,10 @@ export const homeIcons: { key: HomeKeyType; title: string; icon: IconType }[] =
       key: "about",
       title: "About",
       icon: BsInfoCircleFill,
+    },
+    {
+      key: "about-os",
+      title: "About OS",
+      icon: BsInfo,
     },
   ];

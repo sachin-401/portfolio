@@ -10,6 +10,12 @@ export const useContextMenu = () => {
   const showContextMenu = useCallback(
     (e: MouseEvent) => {
       e.preventDefault();
+      const element = document.getElementById("lock-screen");
+
+      const target = e.target;
+      if (target instanceof Element && element?.contains(target)) {
+        return;
+      }
       openContextMenu();
       updateMousePosition({
         x: e.clientX,

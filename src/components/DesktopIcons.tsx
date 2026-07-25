@@ -27,7 +27,7 @@ export const DesktopIcons = () => {
   return (
     <div className="flex flex-col gap-2.5 flex-1 h-full mt-10">
       {homeIcons.map((icon) => {
-        if (icon.key === "about") return null;
+        if (icon.key === "about" || icon.key === "about-os") return null;
         return (
           <div
             key={icon.key}
