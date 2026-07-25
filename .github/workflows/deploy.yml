@@ -31,7 +31,7 @@ jobs:
 
       - name: Restart PM2
         run: |
-          pm2 kill portfolio
+          pm2 stop portfolio
           pm2 delete portfolio
           pm2 start ecosystem.config.js --only portfolio
           pm2 save
