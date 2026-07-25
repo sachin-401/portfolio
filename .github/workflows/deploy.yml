@@ -1,0 +1,34 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Add safe directory
+        run: git config --global --add safe.directory /home/nihcas/server/portfolio
+
+      - name: Update code on server
+        run: |
+          cd /home/nihcas/server/portfolio
+          git fetch origin main
+          git reset --hard origin/main
+          git clean -fd
+
+      - name: Install dependencies
+        run: |
+          cd /home/nihcas/server/portfolio
+          pnpm install
+
+      - name: Build
+        run: |
+          cd /home/nihcas/server/portfolio
+          pnpm run build
+
+      - name: Restart PM2
+        run: |
+          sudo -u nihcas pm2 restart portfolio
