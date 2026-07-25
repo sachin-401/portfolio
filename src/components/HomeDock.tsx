@@ -31,10 +31,13 @@ const HomeDock = () => {
   return (
     <div
       id="menu-dock"
-      className="glass-window w-1/2 h-14 mx-auto rounded-xl flex items-center px-4 justify-between"
+      className="glass-window w-full md:w-1/2 h-14 mx-auto rounded-xl flex items-center px-4 justify-between"
     >
       <div className="flex gap-1 items-center">
-        <button className="btn-main p-0.5 " onClick={() => openModal("about")}>
+        <button
+          className="btn-main p-0.5 shrink-0 "
+          onClick={() => openModal("about")}
+        >
           <Image
             src={isDark ? LogoPNGDark : LogoPNGLight}
             alt="logo"
@@ -47,7 +50,7 @@ const HomeDock = () => {
         <MinimizedIcons />
       </div>
 
-      <div className="flex gap-1 items-center">
+      <div className="flex gap-1 items-center shrink-0">
         <ShortcutsButton />
         <ThemeChanger />
         <FullScreenToggleButton />

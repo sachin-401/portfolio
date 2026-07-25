@@ -9,7 +9,7 @@ const MinimizedIcons = () => {
   const updateZIndexToTop = useModalStore((s) => s.updateZIndexToTop);
   const openedModals = Object.entries(modals).filter(([k, v]) => v.status);
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-1 flex-1 overflow-x-auto">
       {openedModals.map(([modalKey, modalValue]) => {
         const icon = homeIcons.find((k) => k.key === modalKey);
         if (!icon) {

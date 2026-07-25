@@ -25,6 +25,7 @@ const getMenuDockTopOffset = () => {
 
   return elem.offsetHeight;
 };
+const MOBILE_BREAKPOINT = 624;
 
 export const Modal = ({
   children,
@@ -43,6 +44,7 @@ export const Modal = ({
   const [windowSize, setWindowSize] = useState({ width, height });
   const windowRef = useRef<HTMLDivElement>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const {
     updatePosition,
@@ -142,14 +144,14 @@ export const Modal = ({
       // Only drag from the header
       if (!(e.target as HTMLElement).closest(".window-header")) return;
       if (isMaximized) return; // Don't drag when maximized
-
+      if (isMobile) return;
       setIsDragging(true);
       setDragOffset({
         x: e.clientX - position.x,
         y: e.clientY - position.y,
       });
     },
-    [isMaximized, position, setDragOffset],
+    [isMaximized, position, setDragOffset, isMobile],
   );
 
   useEffect(() => {
@@ -215,6 +217,8 @@ export const Modal = ({
 
   // Handle minimize
   const handleRestoreToSmallView = () => {
+    if (isMobile) return;
+
     // Restore to previous size
     setWindowSize({ width, height });
     const centerX = (window.innerWidth - width) / 2;
@@ -228,8 +232,51 @@ export const Modal = ({
     toggleMinimizeModal(modalKey);
   };
 
+  useEffect(() => {
+    const updateScreenSize = () => {
+      const mobile = window.innerWidth < MOBILE_BREAKPOINT;
+      setIsMobile(mobile);
+
+      if (mobile) {
+        const bottomOffset = getMenuDockTopOffset();
+
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight - (bottomOffset || 0),
+        });
+
+        setPosition({ x: 0, y: 0 });
+      } else if (!isMaximized) {
+        setWindowSize({
+          width,
+          height,
+        });
+      }
+    };
+
+    updateScreenSize();
+
+    window.addEventListener("resize", updateScreenSize);
+    return () => window.removeEventListener("resize", updateScreenSize);
+  }, [height, width, isMaximized, setPosition]);
+
   // Handle window resize on viewport change
   useEffect(() => {
+    const updateScreenSize = () => {
+      const mobile = window.innerWidth < MOBILE_BREAKPOINT;
+      setIsMobile(mobile);
+
+      if (mobile) {
+        const bottomOffset = getMenuDockTopOffset();
+
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight - (bottomOffset || 0),
+        });
+
+        setPosition({ x: 0, y: 0 });
+      }
+    };
     const handleResize = () => {
       if (isMaximized) {
         const bottomOffset = getMenuDockTopOffset();
@@ -248,6 +295,7 @@ export const Modal = ({
           y: Math.min(position.y, maxY),
         });
       }
+      updateScreenSize();
     };
 
     window.addEventListener("resize", handleResize);
@@ -346,36 +394,38 @@ export const Modal = ({
                     className={`${isOnTop ? "text-white" : isDark ? "text-white" : "text-black"}`}
                   />
                 </button>
-                {!disableMaximize && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (isMaximized) {
-                        handleRestoreToSmallView();
-                      } else {
-                        handleMaximizeToFullscreenView();
-                      }
-                    }}
-                    className={`p-1.5 rounded-lg transition-all ${
-                      isOnTop
-                        ? "hover:bg-orange-400 hover:text-white"
-                        : "hover:bg-orange-200 hover:text-black"
-                    }`}
-                    aria-label="Maximize"
-                  >
-                    {isMaximized ? (
-                      <FiMinimize
-                        size={16}
-                        className={`${isOnTop ? "text-white" : isDark ? "text-white" : "text-black"}`}
-                      />
-                    ) : (
-                      <FiMaximize
-                        size={16}
-                        className={`${isOnTop ? "text-white" : isDark ? "text-white" : "text-black"}`}
-                      />
+                {isMobile
+                  ? null
+                  : !disableMaximize && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (isMaximized) {
+                            handleRestoreToSmallView();
+                          } else {
+                            handleMaximizeToFullscreenView();
+                          }
+                        }}
+                        className={`p-1.5 rounded-lg transition-all ${
+                          isOnTop
+                            ? "hover:bg-orange-400 hover:text-white"
+                            : "hover:bg-orange-200 hover:text-black"
+                        }`}
+                        aria-label="Maximize"
+                      >
+                        {isMaximized ? (
+                          <FiMinimize
+                            size={16}
+                            className={`${isOnTop ? "text-white" : isDark ? "text-white" : "text-black"}`}
+                          />
+                        ) : (
+                          <FiMaximize
+                            size={16}
+                            className={`${isOnTop ? "text-white" : isDark ? "text-white" : "text-black"}`}
+                          />
+                        )}
+                      </button>
                     )}
-                  </button>
-                )}
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
