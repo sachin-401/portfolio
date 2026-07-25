@@ -8,6 +8,7 @@ import { FullScreenToggleButton } from "./FullScreenToggleButton";
 import { ThemeChanger } from "./ThemeChanger";
 import MinimizedIcons from "./MinimizedIcons";
 import { useModalStore } from "@/store/modalStore";
+import ShortcutsButton from "./ShortcutsButton";
 
 const HomeDock = () => {
   const [date, setDate] = useState(new Date());
@@ -47,6 +48,7 @@ const HomeDock = () => {
       </div>
 
       <div className="flex gap-1 items-center">
+        <ShortcutsButton />
         <ThemeChanger />
         <FullScreenToggleButton />
         <div className="flex flex-col">

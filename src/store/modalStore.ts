@@ -32,7 +32,10 @@ export const useModalStore = create<ModalStoreState>()(
           const modalValues = Object.entries(state.modal).sort(
             (a, b) => Number(b[1].status) - Number(a[1].status),
           );
-
+          const isMinimized = state.minimizedModals.includes(_key);
+          if (isMinimized) {
+            get().toggleMinimizeModal(_key);
+          }
           const modalValuesObject = modalValues.reduce<
             ModalStoreState["modal"]
           >((acc, [key, value]) => {
@@ -64,6 +67,7 @@ export const useModalStore = create<ModalStoreState>()(
             ),
           };
         });
+
         get().updateZIndexToTop(_key);
       },
 
