@@ -1,6 +1,11 @@
 import { HomeKeyType } from "./home";
 
-export type ModalKeysType = HomeKeyType | "themeChanger" | "os-modal" | "about";
+export type ModalKeysType =
+  | HomeKeyType
+  | "themeChanger"
+  | "os-modal"
+  | "about"
+  | "shortcuts";
 
 export const modalKeys: Partial<Record<ModalKeysType, ModalKeysType>> = {
   themeChanger: "themeChanger",
@@ -10,4 +15,5 @@ export const modalKeys: Partial<Record<ModalKeysType, ModalKeysType>> = {
   about: "about",
   skills: "skills",
   "os-modal": "os-modal",
+  shortcuts: "shortcuts",
 };

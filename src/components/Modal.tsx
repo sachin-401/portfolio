@@ -314,11 +314,9 @@ export const Modal = ({
           >
             {/* Window Header (Draggable Area) */}
             <div
-              className={`window-header flex justify-between items-center px-4 py-3 border-b border-os-window-border ${isMaximized ? "cursor-default" : "cursor-grab active:cursor-grabbing"} ${isOnTop ? "bg-os-accent" : "bg-os-desktop"}`}
+              className={`window-header flex justify-between items-center px-4 py-2 border-b border-os-window-border ${isMaximized ? "cursor-default" : "cursor-grab active:cursor-grabbing"} ${isOnTop ? "bg-os-accent" : "bg-os-desktop"}`}
             >
               <div className="flex items-center gap-3">
-                {/* Window Controls (traffic lights) */}
-
                 {/* Title */}
                 <h2
                   className={`text-sm font-semibold opacity-80 select-none ${isOnTop ? "text-white" : isDark ? "text-white" : "text-black"}`}
