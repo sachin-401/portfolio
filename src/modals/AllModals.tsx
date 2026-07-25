@@ -1,5 +1,6 @@
 "use client";
 import { AboutModal } from "./AboutModal";
+import { AboutOsModal } from "./AboutOsModal";
 import { ContactsModal } from "./ContactsModal";
 import { ExperiencesModal } from "./ExperiencesModal";
 import { ProjectsModal } from "./ProjectsModal";
@@ -17,6 +18,7 @@ export const AllModals = () => {
       <SkillsModal />
       <AboutModal />
       <ShortcutsModal />
+      <AboutOsModal />
     </div>
   );
 };

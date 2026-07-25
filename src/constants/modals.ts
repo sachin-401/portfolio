@@ -5,7 +5,8 @@ export type ModalKeysType =
   | "themeChanger"
   | "os-modal"
   | "about"
-  | "shortcuts";
+  | "shortcuts"
+  | "about-os";
 
 export const modalKeys: Partial<Record<ModalKeysType, ModalKeysType>> = {
   themeChanger: "themeChanger",
@@ -16,4 +17,5 @@ export const modalKeys: Partial<Record<ModalKeysType, ModalKeysType>> = {
   skills: "skills",
   "os-modal": "os-modal",
   shortcuts: "shortcuts",
+  "about-os": "about-os",
 };

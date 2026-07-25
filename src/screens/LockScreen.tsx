@@ -60,7 +60,7 @@ export const LockScreen = () => {
       >
         {/* User OS Avatar Placeholder */}
         <div className="relative h-20 w-20 rounded-full bg-os-accent/20 border-2 border-os-accent/40 flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(var(--accent-rgb),0.2)]">
-          <Image src={LogoPNG} alt="Logo" objectFit="contain" fill />
+          <Image src={LogoPNG} alt="Logo" objectFit="contain" fill preload />
         </div>
 
         <h1 className="text-2xl font-bold font-sans tracking-tight mb-2">
