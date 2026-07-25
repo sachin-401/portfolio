@@ -31,4 +31,4 @@ jobs:
 
       - name: Restart PM2
         run: |
-          sudo -u nihcas pm2 restart portfolio
+          pm2 restart portfolio
