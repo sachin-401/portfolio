@@ -29,6 +29,13 @@ jobs:
           cd /home/nihcas/server/portfolio
           pnpm run build
 
-      - name: Restart PM2
+      - name: Restart PM2 using ecosystem
         run: |
-          sudo -u nihcas pm2 restart portfolio
+          export PATH=$PATH:/home/nihcas/.local/share/pnpm:/usr/local/bin
+          cd /home/nihcas/server
+
+          # This will start OR restart the app
+          pm2 start ecosystem.config.js --only portfolio --update-env
+
+          # Save the process list
+          pm2 save
