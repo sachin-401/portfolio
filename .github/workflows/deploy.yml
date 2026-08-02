@@ -7,6 +7,7 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
+    environment: actions
 
     steps:
       - name: Add safe directory
@@ -37,6 +38,15 @@ jobs:
           pm2 start ecosystem.config.js --only portfolio
           pm2 save
 
+      - name: Debug Slack Webhook
+        run: |
+          if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
+            echo "SLACK_WEBHOOK_URL exists"
+          else
+            echo "SLACK_WEBHOOK_URL is empty or not set"
+            exit 1
+          fi
+
       # SLACK NOTIFICATION
       - name: notify Slack on Success
         if: success()
@@ -53,10 +63,6 @@ jobs:
         run: |
           curl -X POST -H 'Content-type: application/json' \
             --data '{
-              "text": "❌ *Deployment Failed!* \n• Repository: ${{ github.repository }}"
-            • Branch: ${{ github.ref_name }}
-            • Commit: ${{ github.sha }}
-            • Author: ${{ github.actor }}
-            • Action: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+              "text": "❌ *Deployment Failed!*\n• Repository: ${{ github.repository }}\n• Branch: ${{ github.ref_name }}\n• Commit: ${{ github.sha }}\n• Author: ${{ github.actor }}\n• Action: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
             }' \
             ${{ secrets.SLACK_WEBHOOK_URL }}
