@@ -1,8 +1,8 @@
+import { ContextMenu } from "@/components/ContextMenu";
+import { LockScreen } from "@/screens/LockScreen";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { LockScreen } from "@/screens/LockScreen";
-import { ContextMenu } from "@/components/ContextMenu";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,11 +61,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      style={{ height: "-webkit-fill-available" }}
     >
-      <body className="min-h-full flex flex-col no-print">
+      <body className="flex flex-col no-print min-h-fallback">
         <LockScreen />
-        {children}
+        <main className="flex-1 overflow-y-auto relative">{children}</main>
         <ContextMenu />
       </body>
     </html>

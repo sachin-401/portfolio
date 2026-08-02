@@ -1,14 +1,15 @@
 "use client";
+import useIsMobile from "@/hooks/useIsMobile";
+import { useModalStore } from "@/store/modalStore";
 import { useThemeStore } from "@/store/themeStore";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import LogoPNGDark from "../assets/dark_logo.png";
 import LogoPNGLight from "../assets/light_logo.png";
 import { FullScreenToggleButton } from "./FullScreenToggleButton";
-import { ThemeChanger } from "./ThemeChanger";
 import MinimizedIcons from "./MinimizedIcons";
-import { useModalStore } from "@/store/modalStore";
 import ShortcutsButton from "./ShortcutsButton";
+import { ThemeChanger } from "./ThemeChanger";
 
 const HomeDock = () => {
   const [date, setDate] = useState(new Date());
@@ -16,6 +17,8 @@ const HomeDock = () => {
   const themeMode = useThemeStore((s) => s.mode);
   const isDark = themeMode === "dark";
   const openModal = useModalStore((s) => s.openModal);
+  const { isMobile } = useIsMobile();
+
   useEffect(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
 
@@ -31,7 +34,7 @@ const HomeDock = () => {
   return (
     <div
       id="menu-dock"
-      className="glass-window w-full md:w-1/2 h-14 mx-auto rounded-xl flex items-center px-4 justify-between"
+      className={`${isMobile ? "fixed bottom-0 left-0 right-0" : ""} glass-window w-full md:w-1/2 h-14 mx-auto rounded-xl flex items-center px-4 justify-between`}
     >
       <div className="flex gap-1 items-center">
         <button

@@ -1,12 +1,14 @@
 "use client";
 import { homeIcons } from "@/constants/home";
 import { modalKeys } from "@/constants/modals";
+import useIsMobile from "@/hooks/useIsMobile";
 import { useModalStore } from "@/store/modalStore";
 import { useEffect, useState } from "react";
 
 export const DesktopIcons = () => {
   const [selectedIcon, setSelectedIcon] = useState("");
   const openModal = useModalStore((state) => state.openModal);
+  const { isMobile } = useIsMobile();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -35,7 +37,14 @@ export const DesktopIcons = () => {
             className={`w-28 flex flex-col items-center border border-os/10  gap-2 p-2 rounded-xl cursor-pointer select-none ${
               selectedIcon === icon.key ? "border-os/80" : "hover:border-os/30"
             }`}
-            onClick={() => setSelectedIcon(icon.key)}
+            onClick={() => {
+              if (isMobile?.current) {
+                const key = modalKeys?.[icon.key];
+                if (key) openModal(key);
+                return;
+              }
+              setSelectedIcon(icon.key);
+            }}
             onDoubleClick={() => {
               const key = modalKeys?.[icon.key];
               if (key) openModal(key);

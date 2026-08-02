@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FiX, FiMinus, FiMaximize, FiMinimize } from "react-icons/fi";
 import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { useModalStore } from "@/store/modalStore";
-import { ModalKeysType } from "@/constants/modals";
+import { MOBILE_BREAKPOINT, ModalKeysType } from "@/constants/modals";
 import { useThemeStore } from "@/store/themeStore";
 
 type ModalProps = {
@@ -25,7 +25,6 @@ const getMenuDockTopOffset = () => {
 
   return elem.offsetHeight;
 };
-const MOBILE_BREAKPOINT = 624;
 
 export const Modal = ({
   children,

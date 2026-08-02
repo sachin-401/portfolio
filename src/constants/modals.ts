@@ -19,3 +19,5 @@ export const modalKeys: Partial<Record<ModalKeysType, ModalKeysType>> = {
   shortcuts: "shortcuts",
   "about-os": "about-os",
 };
+
+export const MOBILE_BREAKPOINT = 768;
