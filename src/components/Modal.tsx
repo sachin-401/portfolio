@@ -26,6 +26,8 @@ const getMenuDockTopOffset = () => {
   return elem.offsetHeight;
 };
 
+const MOBILE_HEIGHT_OFFSET = 80;
+
 export const Modal = ({
   children,
   title,
@@ -207,7 +209,10 @@ export const Modal = ({
     // Maximize to full screen (with some padding)
     setWindowSize({
       width: window.innerWidth,
-      height: window.innerHeight - (bottomOffset || 0) - 20,
+      height:
+        window.innerHeight -
+        (bottomOffset || 0) -
+        (isMobile ? MOBILE_HEIGHT_OFFSET + 20 : 20),
     });
     setPosition({ x: 0, y: 0 });
 
@@ -241,7 +246,10 @@ export const Modal = ({
 
         setWindowSize({
           width: window.innerWidth,
-          height: window.innerHeight - (bottomOffset || 0),
+          height:
+            window.innerHeight -
+            (bottomOffset || 0) -
+            (isMobile ? MOBILE_HEIGHT_OFFSET + 20 : 20),
         });
 
         setPosition({ x: 0, y: 0 });
@@ -282,7 +290,10 @@ export const Modal = ({
 
         setWindowSize({
           width: window.innerWidth,
-          height: window.innerHeight - (bottomOffset || 0) - 20,
+          height:
+            window.innerHeight -
+            (bottomOffset || 0) -
+            (isMobile ? MOBILE_HEIGHT_OFFSET + 20 : 20),
         });
         setPosition({ x: 0, y: 0 });
       } else {
@@ -306,6 +317,7 @@ export const Modal = ({
     windowSize.width,
     windowSize.height,
     setPosition,
+    isMobile,
   ]);
 
   // Keyboard shortcut: Escape to close
