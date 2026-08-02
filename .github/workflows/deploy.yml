@@ -38,15 +38,6 @@ jobs:
           pm2 start ecosystem.config.js --only portfolio
           pm2 save
 
-      - name: Debug Slack Webhook
-        run: |
-          if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
-            echo "SLACK_WEBHOOK_URL exists"
-          else
-            echo "SLACK_WEBHOOK_URL is empty or not set"
-            exit 1
-          fi
-
       # SLACK NOTIFICATION
       - name: notify Slack on Success
         if: success()
