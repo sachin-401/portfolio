@@ -36,3 +36,27 @@ jobs:
           pm2 delete portfolio || true
           pm2 start ecosystem.config.js --only portfolio
           pm2 save
+
+      # SLACK NOTIFICATION
+      - name: notify Slack on Success
+        if: success()
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+            --data '{
+              "text": "✅ *Deployment Successful!*\n• Repository: ${{ github.repository }}\n• Branch: ${{ github.ref_name }}\n• Commit: ${{ github.sha }}\n• Author: ${{ github.actor }}\n• Message: ${{ github.event.head_commit.message }}\n• Action: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }' \
+            ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      # SLACK NOTIFICATION ON FAILURE
+      - name: notify Slack on Failure
+        if: failure()
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+            --data '{
+              "text": "❌ *Deployment Failed!* \n• Repository: ${{ github.repository }}"
+            • Branch: ${{ github.ref_name }}
+            • Commit: ${{ github.sha }}
+            • Author: ${{ github.actor }}
+            • Action: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            }' \
+            ${{ secrets.SLACK_WEBHOOK_URL }}

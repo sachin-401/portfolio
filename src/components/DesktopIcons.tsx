@@ -38,7 +38,7 @@ export const DesktopIcons = () => {
               selectedIcon === icon.key ? "border-os/80" : "hover:border-os/30"
             }`}
             onClick={() => {
-              if (isMobile?.current) {
+              if (isMobile) {
                 const key = modalKeys?.[icon.key];
                 if (key) openModal(key);
                 return;
