@@ -8,7 +8,7 @@
 
 # Profile Summary
 
-Fullstack Developer with **6+ years** of professional experience in web development and **2+ years** in mobile and backend development.
+Fullstack Developer with **5+ years** of professional experience in web development and **2+ years** in mobile and backend development.
 
 Specialized in building high-performance applications using **React, Next.js, Node.js, TypeScript**, and modern frontend/backend technologies. Experienced in mentoring developers, collaborating with international clients, and delivering scalable products across e-commerce, property rental, social networking, and compliance-focused systems.
 

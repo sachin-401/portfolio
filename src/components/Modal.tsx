@@ -26,7 +26,7 @@ const getMenuDockTopOffset = () => {
   return elem.offsetHeight;
 };
 
-const MOBILE_HEIGHT_OFFSET = 80;
+const MOBILE_HEIGHT_OFFSET = 10;
 
 export const Modal = ({
   children,

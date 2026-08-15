@@ -3,12 +3,26 @@ import { DesktopIcons } from "@/components/DesktopIcons";
 import HomeDock from "@/components/HomeDock";
 import ScreenHeader from "@/components/ScreenHeader";
 import { bgImages } from "@/constants/backgroundImages";
+import useIsMobile from "@/hooks/useIsMobile";
 import { AllModals } from "@/modals/AllModals";
 import { useThemeStore } from "@/store/themeStore";
 
+export const bgImagesPosition = {
+  dark: {
+    default: "25%",
+    orange: "38%",
+    purple: "center",
+  },
+  light: {
+    default: "center",
+    orange: "41%",
+    purple: "68%",
+  },
+};
+
 export const HomeScreen = () => {
   const { mode, theme } = useThemeStore();
-
+  const { isMobile } = useIsMobile();
   const backgroundImage = bgImages[mode][theme];
 
   return (
@@ -17,7 +31,7 @@ export const HomeScreen = () => {
       className="w-full h-full animate-fade-in flex flex-col justify-between p-4"
       style={{
         backgroundImage: `url(${backgroundImage.src})`,
-        backgroundPosition: "center",
+        backgroundPosition: isMobile ? bgImagesPosition[mode][theme] : "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundColor: "rgba(var(--background-rgb),1)",

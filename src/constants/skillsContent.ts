@@ -6,7 +6,8 @@ export interface SkillGroup {
 
 export const skillsContent = {
   title: "Technical Expertise",
-  description: "Over 6+ years of fullstack web development and 2+ years of mobile engineering experience.",
+  description:
+    "Over 5+ years of fullstack web development and 2+ years of mobile engineering experience.",
   groups: [
     {
       category: "Frontend Development",

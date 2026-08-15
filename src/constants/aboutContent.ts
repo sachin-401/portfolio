@@ -45,7 +45,7 @@ export const aboutContent = {
   linkedin: "https://linkedin.com/in/5achin-bhattarai",
   location: "Bhaktapur, Nepal",
   profileSummary:
-    "Fullstack Developer with 6+ years of professional experience in web development and 2+ years in mobile and backend development. Specialized in building high-performance applications using React, Next.js, Node.js, TypeScript, and modern frontend/backend technologies. Experienced in leading dev teams, collaborating with international clients, and delivering scalable products across e-commerce, property rental, and social platforms.",
+    "Fullstack Developer with 5+ years of professional experience in web development and 2+ years in mobile and backend development. Specialized in building high-performance applications using React, Next.js, Node.js, TypeScript, and modern frontend/backend technologies. Experienced in leading dev teams, collaborating with international clients, and delivering scalable products across e-commerce, property rental, and social platforms.",
   futureVision: {
     paragraphs: [
       "Driven by a strong commitment to technical excellence and continuous growth, my core ambition is to become an expert in System Architecture. I am focused on mastering the design of resilient, scalable, and high-performance distributed systems that cleanly handle complex enterprise requirements.",

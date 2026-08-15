@@ -11,7 +11,8 @@ export interface DetailedExperience {
 
 export const experiencesContent = {
   title: "Professional Work History",
-  subtitle: "6+ years of engineering experience delivering high-impact solutions for international clients and growing startups.",
+  subtitle:
+    "5+ years of engineering experience delivering high-impact solutions for international clients and growing startups.",
   experiences: [
     {
       id: "intosoft",
@@ -19,7 +20,8 @@ export const experiencesContent = {
       role: "Fullstack Developer",
       period: "2023 – 2026",
       location: "Nepal",
-      overview: "Led development teams in architecting and delivering fullstack web applications, ensuring high code quality, timely milestone releases, and client satisfaction.",
+      overview:
+        "Led development teams in architecting and delivering fullstack web applications, ensuring high code quality, timely milestone releases, and client satisfaction.",
       responsibilities: [
         "Led cross-functional development teams by delegating tasks, performing rigorous code reviews, and mentoring junior developers.",
         "Delivered complex client projects strictly on schedule while upholding clean architecture and best coding practices.",
@@ -46,7 +48,8 @@ export const experiencesContent = {
       role: "Frontend Developer",
       period: "2022 – 2023",
       location: "Nepal",
-      overview: "Focused on developing real-time interactive user interfaces for international client platforms with an emphasis on performance and responsiveness.",
+      overview:
+        "Focused on developing real-time interactive user interfaces for international client platforms with an emphasis on performance and responsiveness.",
       responsibilities: [
         "Engineered a real-time social platform tailored for child safety and educational environments (DiGii Social).",
         "Transformed Figma wireframes and design tokens into pixel-perfect, fully responsive web layouts.",
@@ -70,7 +73,8 @@ export const experiencesContent = {
       role: "Fullstack Developer",
       period: "2020 – 2022",
       location: "Nepal",
-      overview: "Developed core ad delivery engines and analytics dashboards powering digital news portals and publisher networks.",
+      overview:
+        "Developed core ad delivery engines and analytics dashboards powering digital news portals and publisher networks.",
       responsibilities: [
         "Developed high-traffic advertisement delivery platforms for leading digital news outlets.",
         "Built responsive publisher and advertiser analytics dashboards using React and Next.js.",
